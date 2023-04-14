@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import styled from "styled-components";
+
+import { useFeatureToggle } from "./hooks";
+
+import { FeatureTypes } from "./app-slice";
+
+import catImg from "./assets/cat.gif";
+
+import "./App.css";
+
+const Container = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
+
+const Image = styled.img`
+    width: 200px;
+    height: 200px;
+`;
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const { hasFeatureEnabled } = useFeatureToggle();
+    const catEnabled = hasFeatureEnabled(FeatureTypes.MATRIX_CAT);
+
+    return (
+        <Container>
+            {true && (
+                <div>
+                    <Image src={catImg} />
+                </div>
+            )}
+        </Container>
+    );
 }
 
 export default App;
