@@ -15,6 +15,13 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, "queries"> {
     store?: AppStore;
 }
 
+export function SimpleWrapper({
+    children,
+}: PropsWithChildren<{}>): JSX.Element {
+    const store = setupStore();
+    return <Provider store={store}>{children}</Provider>;
+}
+
 export function renderWithProviders(
     element: React.ReactElement,
     {

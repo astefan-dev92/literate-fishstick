@@ -1,12 +1,12 @@
 import { FC } from "react";
 
-import { screen } from "@testing-library/react";
+import { renderHook, screen } from "@testing-library/react";
 
 import useFeatureToggle from "./useFeatureToggle";
 
 import { FeatureTypes } from "../app-slice";
 
-import { renderWithProviders } from "../utils/test-utils";
+import { SimpleWrapper, renderWithProviders } from "../utils/test-utils";
 
 const FeatureToggleComponent: FC<{ featureKey: FeatureTypes }> = ({
     featureKey,
@@ -43,6 +43,34 @@ describe("useFeatureToggle", () => {
             expect(
                 screen.queryByTestId(`feature-${FeatureTypes.NYAN_CAT}`)
             ).toBeFalsy();
+        });
+    });
+
+    describe("with render hooks", () => {
+        test("should have cat enabled by default", () => {
+            const { result } = renderHook(useFeatureToggle, {
+                wrapper: SimpleWrapper,
+            });
+
+            const matrixCatEnabled = result.current.hasFeatureEnabled(
+                FeatureTypes.MATRIX_CAT
+            );
+
+            expect(matrixCatEnabled).toBeTruthy();
+        });
+
+        describe("if feature key not found", () => {
+            test("should not show feature div", () => {
+                const { result } = renderHook(useFeatureToggle, {
+                    wrapper: SimpleWrapper,
+                });
+
+                const matrixCatEnabled = result.current.hasFeatureEnabled(
+                    FeatureTypes.NYAN_CAT
+                );
+
+                expect(matrixCatEnabled).toBeFalsy();
+            });
         });
     });
 });
