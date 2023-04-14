@@ -8,7 +8,9 @@ import { FeatureTypes } from "../app-slice";
 
 import { renderWithProviders } from "../utils/test-utils";
 
-const TestComponent: FC<{ featureKey: FeatureTypes }> = ({ featureKey }) => {
+const FeatureToggleComponent: FC<{ featureKey: FeatureTypes }> = ({
+    featureKey,
+}) => {
     const { hasFeatureEnabled } = useFeatureToggle();
     const hasFeature = hasFeatureEnabled(featureKey);
 
@@ -24,7 +26,7 @@ const TestComponent: FC<{ featureKey: FeatureTypes }> = ({ featureKey }) => {
 describe("useFeatureToggle", () => {
     test("should have cat enabled by default", () => {
         renderWithProviders(
-            <TestComponent featureKey={FeatureTypes.MATRIX_CAT} />
+            <FeatureToggleComponent featureKey={FeatureTypes.MATRIX_CAT} />
         );
 
         expect(
@@ -35,7 +37,7 @@ describe("useFeatureToggle", () => {
     describe("if feature key not found", () => {
         test("should not show feature div", () => {
             renderWithProviders(
-                <TestComponent featureKey={FeatureTypes.NYAN_CAT} />
+                <FeatureToggleComponent featureKey={FeatureTypes.NYAN_CAT} />
             );
 
             expect(

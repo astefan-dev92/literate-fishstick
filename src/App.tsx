@@ -21,11 +21,11 @@ const Image = styled.img`
 
 function App() {
     const { hasFeatureEnabled } = useFeatureToggle();
-    const catEnabled = hasFeatureEnabled(FeatureTypes.MATRIX_CAT);
+    const matrixCatEnabled = hasFeatureEnabled(FeatureTypes.MATRIX_CAT);
 
     return (
         <Container>
-            {true && (
+            {matrixCatEnabled && (
                 <div>
                     <Image src={catImg} />
                 </div>
