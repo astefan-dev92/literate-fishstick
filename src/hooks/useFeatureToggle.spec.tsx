@@ -60,16 +60,16 @@ describe("useFeatureToggle", () => {
         });
 
         describe("if feature key not found", () => {
-            test("should not show feature div", () => {
+            test("hasFeatureEnabled should return false", () => {
                 const { result } = renderHook(useFeatureToggle, {
                     wrapper: SimpleWrapper,
                 });
 
-                const matrixCatEnabled = result.current.hasFeatureEnabled(
+                const nyanCatEnabled = result.current.hasFeatureEnabled(
                     FeatureTypes.NYAN_CAT
                 );
 
-                expect(matrixCatEnabled).toBeFalsy();
+                expect(nyanCatEnabled).toBeFalsy();
             });
         });
     });
